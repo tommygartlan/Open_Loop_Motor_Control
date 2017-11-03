@@ -11,17 +11,20 @@
  * MPLABX environment.
  * Speed is shown on an LCD display
  * Designed for when there is 4 interrupter on the motor shaft:
- * System clock is 2MHz
- * Fosc/4 = 500KHz
+ * System clock is now 8MHz
+ * Fosc/4 = 2MHz
  * Timer 1 is prescaled by 8 and is used by CCP1 in capture mode
- * So Timer 1 clock is 500KHz/8 = 62,500 Hz
- * So we could measure sown to 1Hz signal from opto but any slower and Timer1
+ * So Timer 1 clock is 4MHz/8 = 250,000 Hz
+ * So we could measure down to 4Hz signal from opto but any slower and Timer1
  * could overflow!!!!
  * PORTS used
  * PORTA   LED Block (not really used)
  * PORTB   Not used (Used in later version for Buttons)
  * PORTC   CCP blocks used for PWM and Capture
  * PORTD   LCD Display
+ * 
+ * Not if Fosc = 4MHz (IRCF = 110),Fosc/4 = 1MHz then t1clk Fosc/4/8= 125,000 and get better resolution down to 2Hz
+ * PWM freq = 1MHz/100 = 10KHz  (however can now hear this freq whne motor is not runing, at low PWM duty cycle)
 ***********************************************************/
 
 /**********************************************
@@ -163,7 +166,7 @@ void Initial(void)
 	
 	OSCCONbits.IRCF2 = 1;
 	OSCCONbits.IRCF1 = 1; 
-	OSCCONbits.IRCF0 = 1;  //8MHz Clock
+	OSCCONbits.IRCF0 = 1;  //8MHz Clock 
 	
 	OSCCONbits.SCS0 = 0; //Internal Oscillator block is selected
 	OSCCONbits.SCS1 = 1;
